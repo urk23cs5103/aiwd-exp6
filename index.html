@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Event Management</title>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<style>
+.event {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin: 10px;
+    transition: 0.3s;
+}
+
+.details {
+    display: none;
+}
+
+.highlight {
+    color: blue;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Events</h1>
+
+<div class="event">
+    <h3>Tech Conference</h3>
+    <p>Date: March 25</p>
+    <button class="toggleBtn">Show Details</button>
+
+    <div class="details">
+        <p>AI, ML, and Future Tech</p>
+        <button class="registerBtn">Register</button>
+    </div>
+</div>
+
+<div class="event">
+    <h3>Design Workshop</h3>
+    <p>Date: March 28</p>
+    <button class="toggleBtn">Show Details</button>
+
+    <div class="details">
+        <p>UI/UX and Creativity</p>
+        <button class="registerBtn">Register</button>
+    </div>
+</div>
+
+<div class="event">
+    <h3>Robotics Expo</h3>
+    <p>Date: April 2</p>
+    <button class="toggleBtn">Show Details</button>
+
+    <div class="details">
+        <p>Automation & Innovation</p>
+        <button class="registerBtn">Register</button>
+    </div>
+</div>
+
+<script>
+$(document).ready(function(){
+
+    $(".toggleBtn").click(function(){
+
+        let eventDiv = $(this).parent();
+        let details = eventDiv.find(".details");
+
+        // Slide toggle with smooth speed
+        details.slideToggle(300);
+
+        // Change button text
+        if(details.is(":visible")){
+            $(this).text("Hide Details");
+        } else {
+            $(this).text("Show Details");
+        }
+
+        // Background highlight
+        $(".event").css("background-color", "white");
+        eventDiv.css("background-color", "#e6f7ff");
+
+        // Highlight title using traversing
+        $(".event h3").removeClass("highlight");
+        let titleElement = eventDiv.find("h3");
+        titleElement.addClass("highlight");
+
+        // Get title
+        let title = titleElement.text();
+
+        // Show alert ONLY when opening
+        if(details.is(":visible")){
+            alert("Selected Event: " + title);
+        }
+    });
+
+    // Register button
+    $(".registerBtn").click(function(){
+        let title = $(this).closest(".event").find("h3").text();
+
+        // Redirect with data
+        window.location.href = "register.html?event=" + encodeURIComponent(title);
+    });
+
+});
+</script>
+
+</body>
+</html>
